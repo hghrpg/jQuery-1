@@ -107,7 +107,8 @@
                 return this;
             }
 
-            // Handle HTML strings
+            // Handle HTML strings 
+            // hgh:http://blog.csdn.net/dyllove98/article/details/8854877 http://www.cnblogs.com/aaronjs/p/3281911.html
             if (typeof selector === "string") {
                 if (selector.charAt(0) === "<" && selector.charAt(selector.length - 1) === ">" && selector.length >= 3) {
                     // Assume that strings that start and end with <> are HTML and skip the regex check
