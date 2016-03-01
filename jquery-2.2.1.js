@@ -12,7 +12,6 @@
  * Date: 2013-07-03T13:30Z
  */
 
-
 // Can't do this because several apps including ASP.NET trace
 // the stack via arguments.caller.callee and Firefox dies if
 // you try to trace through "use strict" call chains. (#13335)
@@ -22,76 +21,76 @@ var
 // A central reference to the root jQuery(document)
 rootjQuery,
 
-    // The deferred used on DOM ready
-    readyList,
+// The deferred used on DOM ready
+readyList,
 
-    // Support: IE9
-    // For `typeof xmlNode.method` instead of `xmlNode.method !== undefined`
-    core_strundefined = typeof undefined,
+// Support: IE9
+// For `typeof xmlNode.method` instead of `xmlNode.method !== undefined`
+core_strundefined = typeof undefined,
 
-    // Use the correct document accordingly with window argument (sandbox)
-    // location = window.location,
-    document = window.document,
-    docElem = document.documentElement,
+// Use the correct document accordingly with window argument (sandbox)
+// location = window.location,
+document = window.document,
+docElem = document.documentElement,
 
-    // Map over jQuery in case of overwrite
-    _jQuery = window.jQuery,
+// Map over jQuery in case of overwrite
+_jQuery = window.jQuery,
 
-    // Map over the $ in case of overwrite
-    _$ = window.$,
+// Map over the $ in case of overwrite
+_$ = window.$,
 
-    // [[Class]] -> type pairs
-    class2type = {},
+// [[Class]] -> type pairs
+class2type = {},
 
-    // List of deleted data cache ids, so we can reuse them
-    core_deletedIds = [],
+// List of deleted data cache ids, so we can reuse them
+core_deletedIds = [],
 
-    core_version = "2.0.3",
+core_version = "2.0.3",
 
-    // Save a reference to some core methods
-    core_concat = core_deletedIds.concat,
-    core_push = core_deletedIds.push,
-    core_slice = core_deletedIds.slice,
-    core_indexOf = core_deletedIds.indexOf,
-    core_toString = class2type.toString,
-    core_hasOwn = class2type.hasOwnProperty,
-    core_trim = core_version.trim,
+// Save a reference to some core methods
+core_concat = core_deletedIds.concat,
+core_push = core_deletedIds.push,
+core_slice = core_deletedIds.slice,
+core_indexOf = core_deletedIds.indexOf,
+core_toString = class2type.toString,
+core_hasOwn = class2type.hasOwnProperty,
+core_trim = core_version.trim,
 
-    // Define a local copy of jQuery
-    jQuery = function (selector, context) {
-        // The jQuery object is actually just the init constructor 'enhanced'
-        return new jQuery.fn.init(selector, context, rootjQuery);
-    },
+// Define a local copy of jQuery
+jQuery = function (selector, context) {
+    // The jQuery object is actually just the init constructor 'enhanced'
+    return new jQuery.fn.init(selector, context, rootjQuery);
+},
 
-    // Used for matching numbers
-    core_pnum = /[+-]?(?:\d*\.|)\d+(?:[eE][+-]?\d+|)/.source,
+// Used for matching numbers
+core_pnum = /[+-]?(?:\d*\.|)\d+(?:[eE][+-]?\d+|)/.source,
 
-    // Used for splitting on whitespace
-    core_rnotwhite = /\S+/g,
+// Used for splitting on whitespace
+core_rnotwhite = /\S+/g,
 
-    // A simple way to check for HTML strings
-    // Prioritize #id over <tag> to avoid XSS via location.hash (#9521)
-    // Strict HTML recognition (#11290: must start with <)
-    rquickExpr = /^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]*))$/,
+// A simple way to check for HTML strings
+// Prioritize #id over <tag> to avoid XSS via location.hash (#9521)
+// Strict HTML recognition (#11290: must start with <)
+rquickExpr = /^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]*))$/,
 
-    // Match a standalone tag
-    rsingleTag = /^<(\w+)\s*\/?>(?:<\/\1>|)$/,
+// Match a standalone tag
+rsingleTag = /^<(\w+)\s*\/?>(?:<\/\1>|)$/,
 
-    // Matches dashed string for camelizing
-    rmsPrefix = /^-ms-/,
-    rdashAlpha = /-([\da-z])/gi,
+// Matches dashed string for camelizing
+rmsPrefix = /^-ms-/,
+rdashAlpha = /-([\da-z])/gi,
 
-    // Used by jQuery.camelCase as callback to replace()
-    fcamelCase = function (all, letter) {
-        return letter.toUpperCase();
-    },
+// Used by jQuery.camelCase as callback to replace()
+fcamelCase = function (all, letter) {
+    return letter.toUpperCase();
+},
 
-    // The ready event handler and self cleanup method
-    completed = function () {
-        document.removeEventListener("DOMContentLoaded", completed, false);
-        window.removeEventListener("load", completed, false);
-        jQuery.ready();
-    };
+// The ready event handler and self cleanup method
+completed = function () {
+    document.removeEventListener("DOMContentLoaded", completed, false);
+    window.removeEventListener("load", completed, false);
+    jQuery.ready();
+};
 
 jQuery.fn = jQuery.prototype = {
     // The current version of jQuery being used
@@ -125,11 +124,7 @@ jQuery.fn = jQuery.prototype = {
                 if (match[1]) {
                     context = context instanceof jQuery ? context[0] : context;
 
-                    var aaa = jQuery.parseHTML(
-                        match[1],
-                        context && context.nodeType ? context.ownerDocument || context : document,
-                        true
-                    )
+                    var aaa = jQuery.parseHTML(match[1], context && context.nodeType ? context.ownerDocument || context : document, true)
 
                     // scripts is true for back-compat
                     jQuery.merge(this, aaa);
@@ -262,12 +257,13 @@ jQuery.fn = jQuery.prototype = {
 
     eq: function (i) {
         var len = this.length,
-            j = +i + (i < 0 ? len : 0);
+        j = +i + (i < 0 ? len : 0);
         return this.pushStack(j >= 0 && j < len ? [this[j]] : []);
     },
 
     map: function (callback) {
-        return this.pushStack(jQuery.map(this, function (elem, i) {
+        return this.pushStack(jQuery.map(this,
+        function (elem, i) {
             return callback.call(elem, i, elem);
         }));
     },
@@ -287,11 +283,10 @@ jQuery.fn = jQuery.prototype = {
 jQuery.fn.init.prototype = jQuery.fn;
 
 jQuery.extend = jQuery.fn.extend = function () {
-    var options, name, src, copy, copyIsArray, clone,
-        target = arguments[0] || {},
-        i = 1,
-        length = arguments.length,
-        deep = false;
+    var options, name, src, copy, copyIsArray, clone, target = arguments[0] || {},
+    i = 1,
+    length = arguments.length,
+    deep = false;
 
     // Handle a deep copy situation
     if (typeof target === "boolean") {
@@ -308,8 +303,7 @@ jQuery.extend = jQuery.fn.extend = function () {
 
     // extend jQuery itself if only one argument is passed
     if (length === i) {
-        target = this;
-        --i;
+        target = this; --i;
     }
 
     for (; i < length; i++) {
@@ -352,8 +346,8 @@ jQuery.extend = jQuery.fn.extend = function () {
 
 jQuery.extend({
     // Unique for each copy of jQuery on the page
-    // °æ±¾ºÅ+Ëæ»úÊý
-    // ÒòÎª¿ÉÄÜÒ»¸öÒ³ÃæÒýÈë¶à¸ö°æ±¾µÄjQueryx
+    // ç‰ˆæœ¬å·+éšæœºæ•°
+    // å› ä¸ºå¯èƒ½ä¸€ä¸ªé¡µé¢å¼•å…¥å¤šä¸ªç‰ˆæœ¬çš„jQueryx
     expando: "jQuery" + (core_version + Math.random()).replace(/\D/g, ""),
 
     noConflict: function (deep) {
@@ -431,9 +425,7 @@ jQuery.extend({
             return String(obj);
         }
         // Support: Safari <= 5.1 (functionish RegExp)
-        return typeof obj === "object" || typeof obj === "function" ?
-            class2type[core_toString.call(obj)] || "object" :
-            typeof obj;
+        return typeof obj === "object" || typeof obj === "function" ? class2type[core_toString.call(obj)] || "object" : typeof obj;
     },
 
     isPlainObject: function (obj) {
@@ -489,7 +481,7 @@ jQuery.extend({
         context = context || document;
 
         var parsed = rsingleTag.exec(data),
-            scripts = !keepScripts && [];
+        scripts = !keepScripts && [];
 
         // Single tag
         if (parsed) {
@@ -532,8 +524,7 @@ jQuery.extend({
 
     // Evaluates a script in a global context
     globalEval: function (code) {
-        var script,
-            indirect = eval;
+        var script, indirect = eval;
 
         code = jQuery.trim(code);
 
@@ -565,10 +556,9 @@ jQuery.extend({
 
     // args is for internal usage only
     each: function (obj, callback, args) {
-        var value,
-            i = 0,
-            length = obj.length,
-            isArray = isArraylike(obj);
+        var value, i = 0,
+        length = obj.length,
+        isArray = isArraylike(obj);
 
         if (args) {
             if (isArray) {
@@ -623,10 +613,7 @@ jQuery.extend({
 
         if (arr != null) {
             if (isArraylike(Object(arr))) {
-                jQuery.merge(ret,
-                    typeof arr === "string" ?
-                    [arr] : arr
-                );
+                jQuery.merge(ret, typeof arr === "string" ? [arr] : arr);
             } else {
                 core_push.call(ret, arr);
             }
@@ -641,8 +628,8 @@ jQuery.extend({
 
     merge: function (first, second) {
         var l = second.length,
-            i = first.length,
-            j = 0;
+        i = first.length,
+        j = 0;
 
         if (typeof l === "number") {
             for (; j < l; j++) {
@@ -660,10 +647,9 @@ jQuery.extend({
     },
 
     grep: function (elems, callback, inv) {
-        var retVal,
-            ret = [],
-            i = 0,
-            length = elems.length;
+        var retVal, ret = [],
+        i = 0,
+        length = elems.length;
         inv = !!inv;
 
         // Go through the array, only saving the items
@@ -680,11 +666,10 @@ jQuery.extend({
 
     // arg is for internal usage only
     map: function (elems, callback, arg) {
-        var value,
-            i = 0,
-            length = elems.length,
-            isArray = isArraylike(elems),
-            ret = [];
+        var value, i = 0,
+        length = elems.length,
+        isArray = isArraylike(elems),
+        ret = [];
 
         // Go through the array, translating each of the items to their
         if (isArray) {
@@ -747,8 +732,8 @@ jQuery.extend({
     // The value/s can optionally be executed if it's a function
     access: function (elems, fn, key, value, chainable, emptyGet, raw) {
         var i = 0,
-            length = elems.length,
-            bulk = key == null;
+        length = elems.length,
+        bulk = key == null;
 
         // Sets many values
         if (jQuery.type(key) === "object") {
@@ -787,13 +772,10 @@ jQuery.extend({
             }
         }
 
-        return chainable ?
-            elems :
+        return chainable ? elems :
 
         // Gets
-        bulk ?
-            fn.call(elems) :
-            length ? fn(elems[0], key) : emptyGet;
+        bulk ? fn.call(elems) : length ? fn(elems[0], key) : emptyGet;
     },
 
     now: Date.now,
@@ -802,8 +784,7 @@ jQuery.extend({
     // Note: this method belongs to the css module but it's needed here for the support module.
     // If support gets modularized, this method should be moved back to the css module.
     swap: function (elem, options, callback, args) {
-        var ret, name,
-            old = {};
+        var ret, name, old = {};
 
         // Remember the old values, and insert the new ones
         for (name in options) {
@@ -847,13 +828,14 @@ jQuery.ready.promise = function (obj) {
 };
 
 // Populate the class2type map
-jQuery.each("Boolean Number String Function Array Date RegExp Object Error".split(" "), function (i, name) {
+jQuery.each("Boolean Number String Function Array Date RegExp Object Error".split(" "),
+function (i, name) {
     class2type["[object " + name + "]"] = name.toLowerCase();
 });
 
 function isArraylike(obj) {
     var length = obj.length,
-        type = jQuery.type(obj);
+    type = jQuery.type(obj);
 
     if (jQuery.isWindow(obj)) {
         return false;
@@ -863,16 +845,8 @@ function isArraylike(obj) {
         return true;
     }
 
-    return type === "array" || type !== "function" &&
-        (length === 0 ||
-        typeof length === "number" && length > 0 && (length - 1) in obj);
+    return type === "array" || type !== "function" && (length === 0 || typeof length === "number" && length > 0 && (length - 1) in obj);
 }
 
 // All jQuery objects should point back to these
 rootjQuery = jQuery(document);
-
-
-
-
-
-
